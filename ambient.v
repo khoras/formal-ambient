@@ -13,9 +13,9 @@ Inductive AmbType := Amb : MobType -> AmbType.
 
 Inductive Capability :=
 | Path : Capability -> Capability -> Capability
-| In   : nat -> Capability
-| Out  : nat -> Capability
-| Open : nat -> Capability
+| In   : Z -> Capability
+| Out  : Z -> Capability
+| Open : Z -> Capability
 .
 
 Inductive Process :=
@@ -73,6 +73,16 @@ match 𝛾 with
       end
 end.
 
+
+Fixpoint TypeCheckAmbient (𝛾: 𝛤 ) (Θ: 𝛤) (ambient: Z) (type: AmbType) : Prop :=
+False
+.
+
+Fixpoint TypeCheckCapability (𝛾: 𝛤 ) (Θ: 𝛤) (capability: Capability) (type: CapType) : Prop :=
+match capability with
+| Path U V => TypeCheckCapability 𝛾 Θ U type /\ TypeCheckCapability 𝛾 Θ V type
+| _ => False
+end.
 
 
 
